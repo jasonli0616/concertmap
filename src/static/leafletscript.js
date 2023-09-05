@@ -2,6 +2,7 @@
 var map = L.map('map')
     .setView([43.65, -79.38], 12); // Coordinates: 43.65, -79.38 (Toronto); zoom: 12
 
+
 // Add OpenStreetMap tile layer
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -33,4 +34,28 @@ function addConcertMarker(lat, lng, artistName, dateRaw, venue, url) {
 
     // Open page on setlist.fm in new tab on click
     marker.on("click", () => window.open(url, "_blank"))
+}
+
+/**
+ * Show user's current location, if available.
+ */
+function showCurrentLocation(event) {
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+
+            let currentPosition = [pos.coords.latitude, pos.coords.longitude];
+
+            // Move map to current location
+            map.setView(currentPosition, 12);
+
+            // Add pin to current location
+            let marker = L.marker(currentPosition).addTo(map);
+
+            // Marker tooltip on hover
+            marker.bindTooltip("Current location")
+        })
+    } else {
+        window.alert("Not available");
+    }
 }
