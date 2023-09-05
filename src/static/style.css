@@ -3,9 +3,8 @@
     max-height: 20vh;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     text-align: center;
-    display: block;
 }
 
 #map {
-    height: 80vh;
+    height: 70vh;
 }

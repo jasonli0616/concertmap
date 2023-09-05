@@ -44,7 +44,30 @@
     <!-- Map -->
     <div id="map"></div>
 
+
     <script src="{{ url_for('static', filename='leafletscript.js') }}"></script>
+
+    <!-- Inject data from Python backend -->
+    <script>
+
+        {% if setlists %}
+
+            {% for setlist in setlists %}
+
+                addConcertMarker(
+                    "{{ setlist["lat"] }}",
+                    "{{ setlist["lng"] }}",
+                    "{{ setlist["artistName"] }}",
+                    "{{ setlist["dateRaw"] }}",
+                    "{{ setlist["venue"] }}",
+                    "{{ setlist["url"] }}"
+                );
+
+            {% endfor %}
+
+        {% endif %}
+
+    </script>
 </body>
 
 </html>
