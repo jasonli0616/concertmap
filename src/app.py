@@ -22,6 +22,8 @@ ITEMS_PER_PAGE = 20
 @app.route("/", methods=["GET", "POST"])
 def index():
 
+    search_artist_name = ""
+    search_year = ""
     setlists = []
 
     if request.method == "POST":
@@ -33,7 +35,7 @@ def index():
         # Send request
         setlists = get_result(search_artist_name, search_year)
 
-    return render_template("index.html", setlists=setlists)
+    return render_template("index.html", search_artist_name=search_artist_name, search_year=search_year, setlists=setlists)
     
 
 # Setlist object

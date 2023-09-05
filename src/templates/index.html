@@ -29,10 +29,10 @@
         <!-- Search form -->
         <form action="/" method="POST">
             <label for="artistname">Artist name:</label>
-            <input type="text" name="artistname" required>
+            <input type="text" name="artistname" value="{{ search_artist_name }}" required>
 
             <label for="year">Year:</label>
-            <input type="number" name="year" required>
+            <input type="number" name="year" value="{{ search_year }}" required>
 
             <button type="submit">Search</button>
         </form>
