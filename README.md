@@ -4,6 +4,13 @@ This is a website that allows you to view concerts in map form.
 
 This is not a commercial product, it is a free and open source personal project.
 
+## How to run
+
+1. Get an API key from [setlist.fm](https://setlist.fm/).
+2. Install requirements `pip3 install -r requirements.txt`
+3. `cd src`
+4. Run Flask app using Python 3.11 `flask run`
+
 ## Credits
 
 This project uses the following software:
