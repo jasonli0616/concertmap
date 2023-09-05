@@ -27,7 +27,7 @@
         </p>
 
         <!-- Search form -->
-        <form action="/" method="POST">
+        <form action="/" method="GET">
             <label for="artistname">Artist name:</label>
             <input type="text" name="artistname" value="{{ search_artist_name }}" required>
 
@@ -66,6 +66,10 @@
                 );
 
             {% endfor %}
+
+        {% elif searched %}
+
+            window.alert("No results found");
 
         {% endif %}
 

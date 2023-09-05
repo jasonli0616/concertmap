@@ -19,23 +19,24 @@ ITEMS_PER_PAGE = 20
 
 
 # Main website route
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
 
     search_artist_name = ""
     search_year = ""
+    searched = False
     setlists = []
 
-    if request.method == "POST":
+    # Get form data
+    search_artist_name = request.args.get("artistname")
+    search_year = request.args.get("year")
 
-        # Get form data
-        search_artist_name = request.form["artistname"]
-        search_year = request.form["year"]
-        
+    if search_artist_name and search_year:
         # Send request
         setlists = get_result(search_artist_name, search_year)
+        searched = True
 
-    return render_template("index.html", search_artist_name=search_artist_name, search_year=search_year, setlists=setlists)
+    return render_template("index.html", search_artist_name=search_artist_name, search_year=search_year, setlists=setlists, searched=searched)
     
 
 # Setlist object
