@@ -26,11 +26,10 @@ def index():
 
         # Get form data
         search_artist_name = request.form["artistname"]
-        search_city = request.form["city"]
         search_year = request.form["year"]
         
         # Send request
-        setlists = get_result(search_artist_name, search_city, search_year)
+        setlists = get_result(search_artist_name, search_year)
 
     return render_template("index.html", setlists=setlists)
     
@@ -47,10 +46,10 @@ class Setlist:
 
 
 # Get response and parse
-def get_result(search_artist_name, search_city, search_year) -> list[Setlist | None]:
+def get_result(search_artist_name, search_year) -> list[Setlist | None]:
 
     # Send request and get response
-    response = send_api_request(search_artist_name, search_city, search_year)
+    response = send_api_request(search_artist_name, search_year)
 
     if response:
         response_json = response.json()
@@ -69,27 +68,21 @@ def get_result(search_artist_name, search_city, search_year) -> list[Setlist | N
 
 
 # Send request to API
-def send_api_request(search_artist_name, search_city, search_year):
+def send_api_request(search_artist_name, search_year):
 
     # Sanitize inputs
     search_artist_name = search_artist_name.strip()
-    search_city = search_city.strip()
     search_year = search_year.strip()
-    search_year = search_year if search_year.isdigit() else "" # ensure is 
+    search_year = search_year if search_year.isdigit() else "" # ensure is int
 
     # Get request data
     headers = {"Accept": "application/json", "x-api-key": API_KEY}
     query = {}
 
-    if search_artist_name:
-        query["artistName"] = search_artist_name
-    if search_city:
-        query["cityName"] = search_city
-    if search_year:
-        query["year"] = search_year
-
-    print(headers)
+    # Insert query
+    query["artistName"] = search_artist_name
+    query["year"] = search_year
 
     # Send request
-    if query:
+    if search_artist_name and search_year:
         return requests.get(API_URL, headers=headers, params=query)
