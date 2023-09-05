@@ -4,6 +4,9 @@ This is a website that allows you to view concerts in map form.
 
 This is not a commercial product, it is a free and open source personal project.
 
+You can use it here: https://concertmap.jasonli0616.repl.co/ \
+(This website will not work once my API key reaches the daily rate limit.)
+
 ## How to run
 
 1. Get an API key from [setlist.fm](https://setlist.fm/).
