@@ -18,13 +18,30 @@
 <body>
 
     <div id="title">
+
+        <!-- Title bar text -->
         <h1>Concert Map</h1>
         <p>
             Created by <a href="https://github.com/jasonli0616" target="_blank">Jason Li</a>.
             View on <a href="https://github.com/jasonli0616/concertmap" target="_blank">GitHub</a>.
         </p>
+
+        <!-- Search form -->
+        <form action="/" method="POST">
+            <label for="artistname">Artist name:</label>
+            <input type="text" name="artistname">
+
+            <label for="city">City:</label>
+            <input type="text" name="city">
+
+            <label for="year">Year:</label>
+            <input type="number" name="year">
+
+            <button type="submit">Search</button>
+        </form>
     </div>
 
+    <!-- Map -->
     <div id="map"></div>
 
     <script src="{{ url_for('static', filename='leafletscript.js') }}"></script>
