@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import requests
 import requests_cache
 import os
+import math
 import dotenv
 
 
@@ -14,6 +15,7 @@ dotenv.load_dotenv()
 # setlist.fm API values
 API_KEY = os.getenv("API_KEY")
 API_URL = "https://api.setlist.fm/rest/1.0/search/setlists"
+ITEMS_PER_PAGE = 20
 
 
 # Main website route
@@ -46,14 +48,13 @@ class Setlist:
 
 
 # Get response and parse
-def get_result(search_artist_name, search_year) -> list[Setlist | None]:
+def get_result(search_artist_name, search_year, page=1) -> list[Setlist | None]:
 
     # Send request and get response
-    response = send_api_request(search_artist_name, search_year)
+    response = send_api_request(search_artist_name, search_year, page)
 
     if response:
         response_json = response.json()
-        print(response_json)
 
         # If successful
         if "code" not in response_json.keys():
@@ -64,11 +65,17 @@ def get_result(search_artist_name, search_year) -> list[Setlist | None]:
             for setlist_json in response_json["setlist"]:
                 setlists.append(Setlist(setlist_json))
 
+            # Handle more pages
+            total_items = response_json["total"]
+            total_pages = math.ceil(total_items / ITEMS_PER_PAGE)
+            if total_pages > page:
+                setlists.extend(get_result(search_artist_name, search_year, page+1))
+
             return setlists
 
 
 # Send request to API
-def send_api_request(search_artist_name, search_year):
+def send_api_request(search_artist_name, search_year, page):
 
     # Sanitize inputs
     search_artist_name = search_artist_name.strip()
@@ -82,6 +89,7 @@ def send_api_request(search_artist_name, search_year):
     # Insert query
     query["artistName"] = search_artist_name
     query["year"] = search_year
+    query["p"] = page
 
     # Send request
     if search_artist_name and search_year:
