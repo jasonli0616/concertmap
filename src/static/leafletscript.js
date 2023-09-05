@@ -25,7 +25,7 @@ function addConcertMarker(lat, lng, artistName, dateRaw, venue, url) {
 
     // Format date from dd-MM-yyyy
     let [day, month, year] = dateRaw.split("-");
-    let date = new Date(year, month, day)
+    let date = new Date(year, month-1, day)
 
     // Create marker (pin)
     let marker = L.marker([lat, lng]).addTo(map);
