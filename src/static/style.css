@@ -1,3 +1,9 @@
+#title {
+    height: 10vh;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-align: center;
+}
+
 #map {
-    height: 95vh;
+    height: 80vh;
 }
