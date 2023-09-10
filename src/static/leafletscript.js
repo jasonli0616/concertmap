@@ -40,8 +40,11 @@ function addConcertMarker(lat, lng, artistName, date, venue, url) {
  * @param {...any} coords all coordinates in format [lat, lng]
  */
 function drawLineBetweenConcerts(...coords) {
-    L.polyline(coords)
+    let line = L.polyline(coords)
         .addTo(map);
+
+    // Zoom map to fit all concerts
+    map.fitBounds(line.getBounds());
 }
 
 
