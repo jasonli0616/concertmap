@@ -2,6 +2,7 @@ import requests
 import requests_cache
 import math
 import os
+from datetime import datetime
 import time
 import dotenv
 
@@ -29,10 +30,17 @@ class Setlist:
         """
         self.lat = setlist_json["venue"]["city"]["coords"]["lat"]
         self.lng = setlist_json["venue"]["city"]["coords"]["long"]
-        self.artistName = setlist_json["artist"]["name"]
-        self.dateRaw = setlist_json["eventDate"]
+        self.artist_name = setlist_json["artist"]["name"]
+        self.date_string = Setlist._format_date(setlist_json["eventDate"])
         self.venue = setlist_json["venue"]["name"]
         self.url = setlist_json["url"]
+
+    @staticmethod
+    def _format_date(date_raw):
+        """Convert the dd-mm-yyyy input to 'January 1 1970' format."""
+        
+        date_object = datetime.strptime(date_raw, "%d-%m-%Y").date()
+        return date_object.strftime("%B %d, %Y")
 
 
 def get_result(search_artist_name, search_year, page=1) -> list[Setlist | None]:

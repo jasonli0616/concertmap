@@ -17,21 +17,17 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
  * @param {*} lat latitude
  * @param {*} lng longitude
  * @param {*} artistName artist name
- * @param {*} dateRaw date of concert in dd-MM-yyyy as specified in setlist.fm API
+ * @param {*} date date of concert
  * @param {*} venue venue name
  * @param {*} url setlist url
  */
-function addConcertMarker(lat, lng, artistName, dateRaw, venue, url) {
-
-    // Format date from dd-MM-yyyy
-    let [day, month, year] = dateRaw.split("-");
-    let date = new Date(year, month-1, day)
+function addConcertMarker(lat, lng, artistName, date, venue, url) {
 
     // Create marker (pin)
     let marker = L.marker([lat, lng]).addTo(map);
 
     // Show details in tooltip on hover
-    marker.bindTooltip(`${artistName}<br>${date.toLocaleDateString()}<br>${venue}`)
+    marker.bindTooltip(`${artistName}<br>${date}<br>${venue}`)
 
     // Open page on setlist.fm in new tab on click
     marker.on("click", () => window.open(url, "_blank"))
