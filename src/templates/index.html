@@ -69,6 +69,14 @@
 
             {% endfor %}
 
+            drawLineBetweenConcerts(
+                {% for setlist in setlists %}
+
+                    [{{ setlist["lat"] }}, {{ setlist["lng"] }}],
+
+                {% endfor %}
+            );
+
         {% elif searched %}
 
             window.alert("No results found");

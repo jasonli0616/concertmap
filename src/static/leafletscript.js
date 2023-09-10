@@ -33,6 +33,18 @@ function addConcertMarker(lat, lng, artistName, date, venue, url) {
     marker.on("click", () => window.open(url, "_blank"))
 }
 
+
+/**
+ * Draw a line between the specified coordinates, in order.
+ * 
+ * @param {...any} coords all coordinates in format [lat, lng]
+ */
+function drawLineBetweenConcerts(...coords) {
+    L.polyline(coords)
+        .addTo(map);
+}
+
+
 /**
  * Show user's current location, if available.
  */
