@@ -2,6 +2,7 @@ import requests
 import requests_cache
 import math
 import os
+import time
 import dotenv
 
 
@@ -60,6 +61,7 @@ def get_result(search_artist_name, search_year, page=1) -> list[Setlist | None]:
             total_items = response_json["total"]
             total_pages = math.ceil(total_items / ITEMS_PER_PAGE)
             if total_pages > page:
+                time.sleep(0.2)
                 setlists.extend(get_result(search_artist_name, search_year, page+1))
 
             return setlists
