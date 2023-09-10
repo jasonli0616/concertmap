@@ -31,15 +31,19 @@ class Setlist:
         self.lat = setlist_json["venue"]["city"]["coords"]["lat"]
         self.lng = setlist_json["venue"]["city"]["coords"]["long"]
         self.artist_name = setlist_json["artist"]["name"]
-        self.date_string = Setlist._format_date(setlist_json["eventDate"])
+        self._date_object = Setlist._get_date_object(setlist_json["eventDate"])
+        self.date_string = Setlist._format_date(self._date_object)
         self.venue = setlist_json["venue"]["name"]
         self.url = setlist_json["url"]
 
     @staticmethod
-    def _format_date(date_raw):
+    def _get_date_object(date_raw):
+        """Convert the raw API date output into a date object."""
+        return datetime.strptime(date_raw, "%d-%m-%Y").date()
+
+    @staticmethod
+    def _format_date(date_object):
         """Convert the dd-mm-yyyy input to 'January 1 1970' format."""
-        
-        date_object = datetime.strptime(date_raw, "%d-%m-%Y").date()
         return date_object.strftime("%B %d, %Y")
 
 
@@ -95,3 +99,10 @@ def _send_api_request(search_artist_name, search_year, page):
     # Send request
     if search_artist_name and search_year:
         return requests.get(API_URL, headers=headers, params=query)
+
+
+def sort_setlists_by_date(setlists):
+    """Sort the list of setlists by date."""
+
+    setlists.sort(key=lambda setlist: setlist._date_object)
+    return setlists

@@ -14,7 +14,7 @@ def index():
 
     if search_artist_name and search_year:
         # Send request
-        setlists = setlistapi.get_result(search_artist_name, search_year)
+        setlists = setlistapi.sort_setlists_by_date(setlistapi.get_result(search_artist_name, search_year))
         searched = True
     else:
         # Change empty variables from None to blank string
